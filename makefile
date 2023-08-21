@@ -1,8 +1,21 @@
 CC = gcc
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -g
+OBJS = termal.o term_control.o
 
-termal: termal.c
-	$(CC) $(CFLAGS) -o $@ $<
+all: $(OBJS)
+	$(CC) $^ -o termal
+
+%.o: %.c %.h
+	$(CC) -c $< $(CFLAGS) -o $@
+
+termal.o: termal.c
+	$(CC) -c $< $(CFLAGS) -o $@
+
+raw: raw.c raw.h
+	$(CC) $^ $(CFLAGS) -o $@
+
+purge: clean
+	rm -rf termal
 
 clean:
-	rm termal
+	rm -rf *.o raw
